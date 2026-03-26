@@ -1,24 +1,50 @@
 // Product API calls for Z3n Marketplace
 import supabase from '../core/supabase.js';
 import toast from '../components/toast.js';
+import { getCurrentUser } from '../core/auth.js';
+import slugify from '../utils/slugify.js';
 
-export async function getProducts({ category, sort, page, limit, filters }) {
   try {
-    let query = supabase.from('products').select('*');
+    let query = supabase
+      .from('products')
+      .select('*, profiles:profiles!products_seller_id_fkey(id, username, full_name, avatar_url)')
+      .eq('status', 'active');
     if (category) query = query.eq('category', category);
-    // ...apply sort, filters, pagination
-    const { data, error } = await query;
+    if (filters?.minPrice) query = query.gte('price', filters.minPrice);
+    if (filters?.maxPrice) query = query.lte('price', filters.maxPrice);
+    if (filters?.aiModels && filters.aiModels.length) query = query.contains('ai_models', filters.aiModels);
+    // Sorting
+    if (sort === 'newest') query = query.order('created_at', { ascending: false });
+    else if (sort === 'popular') query = query.order('total_sales', { ascending: false });
+    else if (sort === 'rating') query = query.order('rating_avg', { ascending: false });
+    else if (sort === 'price_asc') query = query.order('price', { ascending: true });
+    else if (sort === 'price_desc') query = query.order('price', { ascending: false });
+    // Pagination
+    const pageNum = page || 1;
+    const pageSize = limit || 20;
+    const from = (pageNum - 1) * pageSize;
+    const to = from + pageSize - 1;
+    query = query.range(from, to);
+    // Count
+    query = query.select('*', { count: 'exact' });
+    const { data, error, count } = await query;
     if (error) throw error;
-    return data;
+    return { products: data, count, pages: Math.ceil((count || 0) / pageSize) };
   } catch (err) {
     toast.error(err.message || 'Failed to load products');
-    return [];
+    return { products: [], count: 0, pages: 0 };
   }
 }
 
-export async function getProductBySlug(slug) {
   try {
-    const { data, error } = await supabase.from('products').select('*').eq('slug', slug).single();
+    const user = await getCurrentUser();
+    let query = supabase
+      .from('products')
+      .select('*, profiles:profiles!products_seller_id_fkey(id, username, full_name, avatar_url)')
+      .eq('slug', slug)
+      .limit(1);
+    query = query.or(`status.eq.active,seller_id.eq.${user ? user.id : ''}`);
+    const { data, error } = await query.single();
     if (error) throw error;
     return data;
   } catch (err) {
@@ -38,9 +64,14 @@ export async function getProductById(id) {
   }
 }
 
-export async function getFeaturedProducts() {
   try {
-    const { data, error } = await supabase.from('products').select('*').eq('featured', true);
+    const { data, error } = await supabase
+      .from('products')
+      .select('*, profiles:profiles!products_seller_id_fkey(id, username, full_name, avatar_url)')
+      .eq('is_featured', true)
+      .eq('status', 'active')
+      .order('created_at', { ascending: false })
+      .limit(8);
     if (error) throw error;
     return data;
   } catch (err) {
@@ -49,9 +80,14 @@ export async function getFeaturedProducts() {
   }
 }
 
-export async function getProductsByCategory(category) {
   try {
-    const { data, error } = await supabase.from('products').select('*').eq('category', category);
+    const { data, error } = await supabase
+      .from('products')
+      .select('*, profiles:profiles!products_seller_id_fkey(id, username, full_name, avatar_url)')
+      .eq('category', category)
+      .eq('status', 'active')
+      .order('total_sales', { ascending: false })
+      .limit(12);
     if (error) throw error;
     return data;
   } catch (err) {
@@ -60,9 +96,12 @@ export async function getProductsByCategory(category) {
   }
 }
 
-export async function getSellerProducts(sellerId) {
   try {
-    const { data, error } = await supabase.from('products').select('*').eq('seller_id', sellerId);
+    const { data, error } = await supabase
+      .from('products')
+      .select('*, profiles:profiles!products_seller_id_fkey(id, username, full_name, avatar_url)')
+      .eq('seller_id', sellerId)
+      .order('created_at', { ascending: false });
     if (error) throw error;
     return data;
   } catch (err) {
@@ -71,37 +110,61 @@ export async function getSellerProducts(sellerId) {
   }
 }
 
-export async function createProduct(data) {
   try {
-    const { error } = await supabase.from('products').insert([data]);
+    const user = await getCurrentUser();
+    if (!user) throw new Error('Not authenticated');
+    const slug = slugify(data.title);
+    const { data: created, error } = await supabase.from('products').insert([
+      {
+        ...data,
+        seller_id: user.id,
+        slug,
+        status: 'pending'
+      }
+    ]).select('*').single();
     if (error) throw error;
-    toast.success('Product created');
+    toast.success('Product created (pending approval)');
+    return created;
   } catch (err) {
     toast.error(err.message || 'Create failed');
+    return null;
   }
 }
 
-export async function updateProduct(id, data) {
   try {
-    const { error } = await supabase.from('products').update(data).eq('id', id);
+    const user = await getCurrentUser();
+    if (!user) throw new Error('Not authenticated');
+    // Only allow update if seller_id matches
+    const { data: product, error: err1 } = await supabase.from('products').select('seller_id').eq('id', id).single();
+    if (err1) throw err1;
+    if (product.seller_id !== user.id) throw new Error('Not authorized');
+    const { data: updated, error } = await supabase.from('products').update(data).eq('id', id).select('*').single();
     if (error) throw error;
     toast.success('Product updated');
+    return updated;
   } catch (err) {
     toast.error(err.message || 'Update failed');
+    return null;
   }
 }
 
-export async function deleteProduct(id) {
   try {
-    const { error } = await supabase.from('products').delete().eq('id', id);
+    const user = await getCurrentUser();
+    if (!user) throw new Error('Not authenticated');
+    // Only allow delete if seller_id matches
+    const { data: product, error: err1 } = await supabase.from('products').select('seller_id').eq('id', id).single();
+    if (err1) throw err1;
+    if (product.seller_id !== user.id) throw new Error('Not authorized');
+    const { error } = await supabase.from('products').update({ status: 'archived' }).eq('id', id);
     if (error) throw error;
-    toast.success('Product deleted');
+    toast.success('Product archived');
+    return true;
   } catch (err) {
     toast.error(err.message || 'Delete failed');
+    return false;
   }
 }
 
-export async function searchProducts(query, filters) {
   try {
     const { data, error } = await supabase.functions.invoke('search-products', { body: { query, filters } });
     if (error) throw error;
@@ -112,12 +175,36 @@ export async function searchProducts(query, filters) {
   }
 }
 
-export async function incrementProductView(productId) {
   try {
-    await supabase.from('products').update({ views: supabase.raw('views + 1') }).eq('id', productId);
+    const user = await getCurrentUser();
+    await supabase.from('analytics_events').insert([
+      {
+        product_id: productId,
+        event_type: 'view',
+        user_id: user ? user.id : null
+      }
+    ]);
+    await supabase.rpc('increment_view_count', { product_id: productId });
   } catch (err) {
     // Silent fail
   }
+export async function getRelatedProducts(productId, category, limit = 4) {
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .select('*, profiles:profiles!products_seller_id_fkey(id, username, full_name, avatar_url)')
+      .eq('category', category)
+      .neq('id', productId)
+      .eq('status', 'active')
+      .order('rating_avg', { ascending: false })
+      .limit(limit);
+    if (error) throw error;
+    return data;
+  } catch (err) {
+    toast.error(err.message || 'Failed to load related products');
+    return [];
+  }
+}
 }
 
 export async function getRelatedProducts(productId, category) {

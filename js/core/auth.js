@@ -3,59 +3,75 @@ import supabase, { auth } from './supabase.js';
 import store from './store.js';
 import toast from '../components/toast.js';
 
-export async function signUp(email, password, username, displayName) {
   try {
-    const { user, error } = await auth.signUp({
+    // Check username availability
+    const { data: existing } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('username', username)
+      .maybeSingle();
+    if (existing) throw new Error('Username already taken');
+    // Sign up
+    const { data, error } = await auth.signUp({
       email,
       password,
       options: {
-        data: { username, display_name: displayName }
+        data: { username, full_name: displayName }
       }
     });
     if (error) throw error;
-    return user;
+    toast.success('Signup successful!');
+    window.location.href = '/pages/buyer/dashboard.html';
+    return data.user;
   } catch (err) {
     toast.error(err.message || 'Signup failed');
     return null;
   }
 }
 
-export async function signIn(email, password) {
   try {
-    const { user, error } = await auth.signInWithPassword({ email, password });
+    const { data, error } = await auth.signInWithPassword({ email, password });
     if (error) throw error;
-    return user;
+    toast.success('Login successful!');
+    // Redirect to intended page or dashboard
+    const intended = sessionStorage.getItem('z3n_intended_url');
+    window.location.href = intended || '/pages/buyer/dashboard.html';
+    sessionStorage.removeItem('z3n_intended_url');
+    return data.user;
   } catch (err) {
     toast.error(err.message || 'Login failed');
     return null;
   }
 }
 
-export async function signInWithGoogle() {
   try {
-    const { error } = await auth.signInWithOAuth({ provider: 'google' });
+    const { error } = await auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin + '/pages/buyer/dashboard.html'
+      }
+    });
     if (error) throw error;
   } catch (err) {
     toast.error(err.message || 'Google sign-in failed');
   }
 }
 
-export async function signOut() {
   try {
     const { error } = await auth.signOut();
     if (error) throw error;
     store.setState('user', null);
     store.setState('profile', null);
+    toast.success('Signed out');
+    window.location.href = '/pages/index.html';
   } catch (err) {
     toast.error(err.message || 'Sign out failed');
   }
 }
 
-export function getCurrentUser() {
   return auth.getUser().then(({ data }) => data.user || null);
 }
 
-export async function getCurrentProfile() {
   try {
     const user = await getCurrentUser();
     if (!user) return null;
@@ -72,26 +88,27 @@ export async function getCurrentProfile() {
   }
 }
 
-export function onAuthStateChange(callback) {
   return auth.onAuthStateChange(callback);
 }
 
-export async function requireAuth() {
   const user = await getCurrentUser();
-  if (!user) window.location.href = '/src/pages/auth/login.html';
-}
-
-export async function requireSeller() {
-  const profile = await getCurrentProfile();
-  if (!profile || profile.role !== 'seller') {
-    window.location.href = '/src/pages/marketplace.html';
+  if (!user) {
+    sessionStorage.setItem('z3n_intended_url', window.location.pathname + window.location.search);
+    window.location.href = '/pages/auth/login.html';
   }
 }
 
-export async function requireAdmin() {
+  await requireAuth();
+  const profile = await getCurrentProfile();
+  if (!profile || (profile.role !== 'seller' && profile.role !== 'admin')) {
+    window.location.href = '/pages/buyer/dashboard.html';
+  }
+}
+
+  await requireAuth();
   const profile = await getCurrentProfile();
   if (!profile || profile.role !== 'admin') {
-    window.location.href = '/src/pages/marketplace.html';
+    window.location.href = '/pages/index.html';
   }
 }
 
