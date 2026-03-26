@@ -12,10 +12,18 @@
   <div id="nav-search-bar"></div>
   <!-- Cart Icon -->
   <div id="cart-icon">
-    <span id="cart-badge"></span>
+    <span id="cart-count"></span>
   </div>
-  <!-- Auth Buttons / User Dropdown -->
-  <div id="auth-section">
-    <!-- Populated by JS: login/signup or user dropdown -->
+  <!-- Auth Buttons -->
+  <div class="nav-logged-out">
+    <a id="nav-login" href="/pages/auth/login.html">Login</a>
+    <a id="nav-signup" href="/pages/auth/signup.html">Signup</a>
+  </div>
+  <!-- User Dropdown -->
+  <div id="nav-user-menu" class="nav-logged-in" style="display:none">
+    <a href="/pages/buyer/dashboard.html">Dashboard</a>
+    <a href="/pages/buyer/library.html">Library</a>
+    <a id="nav-seller-link" href="/pages/seller/dashboard.html">Seller Dashboard</a>
+    <button id="nav-logout">Logout</button>
   </div>
 </nav>
