@@ -1,0 +1,10 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/src/pages/index.html" },
+    { "source": "/marketplace", "destination": "/src/pages/marketplace.html" },
+    { "source": "/login", "destination": "/src/pages/auth/login.html" },
+    { "source": "/signup", "destination": "/src/pages/auth/signup.html" },
+    { "source": "/seller/dashboard", "destination": "/src/pages/seller/dashboard.html" },
+    { "source": "/buyer/dashboard", "destination": "/src/pages/buyer/dashboard.html" }
+  ]
+}
