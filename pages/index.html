@@ -21,11 +21,11 @@
   <div id="modals"></div>
   <!-- Footer -->
   <div id="footer-container"></div>
-  <script type="module" src="../../js/pages/landing.js"></script>
+  <script type="module" src="../js/pages/landing.js"></script>
   <script>
     // Load nav and footer components
-    fetch('../../components/nav.html').then(r=>r.text()).then(html=>document.getElementById('nav-container').innerHTML=html);
-    fetch('../../components/footer.html').then(r=>r.text()).then(html=>document.getElementById('footer-container').innerHTML=html);
+    fetch('../components/nav.html').then(r=>r.text()).then(html=>document.getElementById('nav-container').innerHTML=html);
+    fetch('../components/footer.html').then(r=>r.text()).then(html=>document.getElementById('footer-container').innerHTML=html);
   </script>
 </body>
 </html>
