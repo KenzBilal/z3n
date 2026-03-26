@@ -11,3 +11,4 @@ A modern digital marketplace built with vanilla HTML, CSS, JavaScript, and Supab
 ## Folder Structure
 
 See `/docs/ARCHITECTURE.md` for details.
+# z3n
