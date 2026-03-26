@@ -1,0 +1,30 @@
+:root {
+  --bg: #000000;
+  --card: #0A0A0A;
+  --surface: #121212;
+  --text-primary: #FFFFFF;
+  --text-secondary: #B3B3B3;
+  --text-muted: #6E6E6E;
+  --border: #1F1F1F;
+  --divider: #2A2A2A;
+  --button: #111111;
+  --button-hover: #1C1C1C;
+  --accent: #7B61FF;
+  --accent-hover: #6B51EF;
+  --accent-dim: rgba(123, 97, 255, 0.08);
+  --accent-border: rgba(123, 97, 255, 0.2);
+  --success: #22C55E;
+  --error: #EF4444;
+  --warning: #F59E0B;
+  
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  
+  --transition: 150ms ease;
+  --transition-slow: 250ms ease;
+  
+  --font-display: 'Clash Display', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
