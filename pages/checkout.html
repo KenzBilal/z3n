@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checkout - Z3n</title>
+  <title>Checkout — Z3N</title>
   <link rel="stylesheet" href="../styles/base/reset.css">
   <link rel="stylesheet" href="../styles/base/variables.css">
   <link rel="stylesheet" href="../styles/base/typography.css">
@@ -12,14 +12,98 @@
 <body>
   <div id="nav-container"></div>
   <main id="checkout-main">
-    <!-- Cart and checkout populated by JS -->
+    <div id="checkout-container">
+      <!-- Empty cart state -->
+      <div id="empty-cart" style="display:none">
+        <h2>Your cart is empty</h2>
+        <p>Add some products to get started</p>
+        <a href="/pages/marketplace.html" class="btn-primary">Browse Marketplace</a>
+      </div>
+      <!-- Checkout content -->
+      <div id="checkout-content">
+        <div id="checkout-left">
+          <h2>Order Summary</h2>
+          <div id="checkout-items-list"></div>
+          <div id="discount-section">
+            <input type="text" id="discount-input" placeholder="Discount code" autocomplete="off">
+            <button id="apply-discount-btn" class="btn-secondary">Apply</button>
+            <p id="discount-msg"></p>
+          </div>
+          <div id="order-totals">
+            <div class="total-row"><span>Subtotal</span><span id="checkout-subtotal">$0.00</span></div>
+            <div class="total-row" id="discount-row" style="display:none"><span>Discount</span><span id="checkout-discount">-$0.00</span></div>
+            <div class="total-row total-final"><span>Total</span><span id="checkout-total">$0.00</span></div>
+          </div>
+          <!-- Free checkout -->
+          <div id="free-checkout" style="display:none">
+            <p class="free-notice">This product is free!</p>
+            <button id="free-claim-btn" class="btn-primary btn-large">Claim Free Product</button>
+          </div>
+          <!-- Paid checkout -->
+          <div id="paid-checkout" style="display:none">
+            <h3>Choose Payment Method</h3>
+            <div id="payment-methods">
+              <label class="payment-option"><input type="radio" name="payment" value="upi" checked><span>UPI</span></label>
+              <label class="payment-option"><input type="radio" name="payment" value="paypal"><span>PayPal</span></label>
+              <label class="payment-option"><input type="radio" name="payment" value="bank"><span>Bank Transfer</span></label>
+            </div>
+            <div id="payment-details">
+              <div id="upi-details" class="payment-info">
+                <p><strong>UPI ID:</strong> z3nmarketplace@upi</p>
+                <p><strong>Amount:</strong> <span id="upi-amount"></span></p>
+                <p>After payment, enter your UPI Transaction ID:</p>
+                <input type="text" id="payment-reference" placeholder="UPI Transaction ID">
+              </div>
+              <div id="paypal-details" class="payment-info" style="display:none">
+                <p><strong>PayPal:</strong> z3nmarketplace@gmail.com</p>
+                <p><strong>Amount:</strong> <span id="paypal-amount"></span></p>
+                <p>After payment, enter your PayPal Transaction ID:</p>
+                <input type="text" id="payment-reference-paypal" placeholder="PayPal Transaction ID">
+              </div>
+              <div id="bank-details" class="payment-info" style="display:none">
+                <p><strong>Account Name:</strong> Z3N Marketplace</p>
+                <p><strong>Account No:</strong> XXXXXXXXXXXX</p>
+                <p><strong>IFSC:</strong> XXXXXXXXX</p>
+                <p><strong>Amount:</strong> <span id="bank-amount"></span></p>
+                <p>After transfer, enter your UTR number:</p>
+                <input type="text" id="payment-reference-bank" placeholder="UTR Number">
+              </div>
+            </div>
+            <div id="payment-note">
+              <p>Access granted within 24 hours after payment verification</p>
+              <p>Confirmation sent to your email</p>
+            </div>
+            <button id="paid-submit-btn" class="btn-primary btn-large">Submit Payment Proof</button>
+          </div>
+        </div>
+        <div id="checkout-sidebar">
+          <h3>Your Order</h3>
+          <div id="sidebar-items"></div>
+          <div id="secure-badge">Secure & Safe</div>
+        </div>
+      </div>
+      <!-- Success state -->
+      <div id="checkout-success" style="display:none">
+        <div id="success-free" style="display:none">
+          <h2>Product Added to Library!</h2>
+          <p>Your download is ready.</p>
+          <a href="/pages/buyer/library.html" class="btn-primary">Go to Library</a>
+        </div>
+        <div id="success-paid" style="display:none">
+          <h2>Payment Submitted!</h2>
+          <p>We've received your payment reference. You'll get access within 24 hours.</p>
+          <p>Order ID: <span id="success-order-id"></span></p>
+          <a href="/pages/buyer/orders.html" class="btn-primary">View Orders</a>
+        </div>
+      </div>
+    </div>
   </main>
   <div id="modals"></div>
   <div id="footer-container"></div>
-  <script type="module" src="../../js/pages/checkout.js"></script>
+  <script type="module" src="../js/pages/checkout.js"></script>
   <script>
-    fetch('../../components/nav.html').then(r=>r.text()).then(html=>document.getElementById('nav-container').innerHTML=html);
-    fetch('../../components/footer.html').then(r=>r.text()).then(html=>document.getElementById('footer-container').innerHTML=html);
+    fetch('../components/nav.html').then(r=>r.text()).then(html=>document.getElementById('nav-container').innerHTML=html);
+    fetch('../components/footer.html').then(r=>r.text()).then(html=>document.getElementById('footer-container').innerHTML=html);
   </script>
 </body>
 </html>

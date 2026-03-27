@@ -12,14 +12,81 @@
 <body>
   <div id="nav-container"></div>
   <main id="product-main">
-    <!-- Product details populated by JS -->
+    <div id="product-loading">Loading...</div>
+    <div id="product-content" style="display:none">
+      <!-- Left: Main content -->
+      <div id="product-left">
+        <div id="product-gallery">
+          <img id="product-thumbnail" src="" alt="">
+          <div id="product-gallery-thumbs"></div>
+        </div>
+        <div id="product-tabs">
+          <button class="tab-btn active" data-tab="description">Description</button>
+          <button class="tab-btn" data-tab="preview">Preview</button>
+          <button class="tab-btn" data-tab="reviews">Reviews</button>
+        </div>
+        <div id="tab-description" class="tab-content">
+          <div id="product-long-description"></div>
+        </div>
+        <div id="tab-preview" class="tab-content" hidden>
+          <p>Preview content (first 30% of product):</p>
+          <div id="product-preview-content"></div>
+        </div>
+        <div id="tab-reviews" class="tab-content" hidden>
+          <div id="product-reviews-list"></div>
+          <div id="review-form-section"></div>
+        </div>
+      </div>
+      <!-- Right: Purchase card -->
+      <div id="product-sidebar">
+        <img id="sidebar-thumbnail" src="" alt="">
+        <h1 id="product-title"></h1>
+        <div id="product-price-display">
+          <span id="product-price"></span>
+          <span id="product-compare-price"></span>
+        </div>
+        <div id="product-rating-display">
+          <span id="product-rating"></span>
+          <span id="product-review-count"></span>
+        </div>
+        <div id="product-stats">
+          <span id="product-sales"></span> sales
+          <span id="product-category-badge"></span>
+        </div>
+        <div id="product-ai-models"></div>
+        <div id="product-tags"></div>
+        <div id="purchase-buttons">
+          <button id="btn-add-cart" class="btn-primary">Add to Cart</button>
+          <button id="btn-buy-now" class="btn-secondary">Buy Now</button>
+          <button id="btn-wishlist" class="btn-secondary">&#9825; Save</button>
+          <a id="btn-demo" href="" target="_blank" style="display:none" class="btn-secondary">View Demo</a>
+        </div>
+        <div id="already-purchased" style="display:none">
+          <p>&#10003; You own this product</p>
+          <button id="btn-download" class="btn-primary">Download</button>
+        </div>
+        <div id="seller-card">
+          <img id="seller-avatar" src="" alt="">
+          <div>
+            <a id="seller-name" href=""></a>
+            <span id="seller-verified"></span>
+          </div>
+          <span id="seller-total-sales"></span>
+        </div>
+      </div>
+    </div>
+    <!-- Related products -->
+    <div id="related-products">
+      <h2>Related Products</h2>
+      <div id="related-grid"></div>
+    </div>
   </main>
   <div id="modals"></div>
   <div id="footer-container"></div>
-  <script type="module" src="../../js/pages/product.js"></script>
+  <script type="module" src="../js/pages/product.js"></script>
   <script>
-    fetch('../../components/nav.html').then(r=>r.text()).then(html=>document.getElementById('nav-container').innerHTML=html);
-    fetch('../../components/footer.html').then(r=>r.text()).then(html=>document.getElementById('footer-container').innerHTML=html);
+    fetch('../components/nav.html').then(r=>r.text()).then(html=>document.getElementById('nav-container').innerHTML=html);
+    fetch('../components/footer.html').then(r=>r.text()).then(html=>document.getElementById('footer-container').innerHTML=html);
   </script>
 </body>
 </html>

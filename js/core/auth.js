@@ -3,20 +3,19 @@ import supabase, { auth } from './supabase.js';
 import store from './store.js';
 import toast from '../components/toast.js';
 
+export async function signUp(email, password, username, displayName) {
   try {
-    // Check username availability
     const { data: existing } = await supabase
       .from('profiles')
       .select('id')
       .eq('username', username)
       .maybeSingle();
     if (existing) throw new Error('Username already taken');
-    // Sign up
     const { data, error } = await auth.signUp({
       email,
       password,
       options: {
-        data: { username, full_name: displayName }
+        data: { username, full_name: displayName || username }
       }
     });
     if (error) throw error;
@@ -29,14 +28,14 @@ import toast from '../components/toast.js';
   }
 }
 
+export async function signIn(email, password) {
   try {
     const { data, error } = await auth.signInWithPassword({ email, password });
     if (error) throw error;
     toast.success('Login successful!');
-    // Redirect to intended page or dashboard
     const intended = sessionStorage.getItem('z3n_intended_url');
-    window.location.href = intended || '/pages/buyer/dashboard.html';
     sessionStorage.removeItem('z3n_intended_url');
+    window.location.href = intended || '/pages/buyer/dashboard.html';
     return data.user;
   } catch (err) {
     toast.error(err.message || 'Login failed');
@@ -44,6 +43,7 @@ import toast from '../components/toast.js';
   }
 }
 
+export async function signInWithGoogle() {
   try {
     const { error } = await auth.signInWithOAuth({
       provider: 'google',
@@ -57,6 +57,7 @@ import toast from '../components/toast.js';
   }
 }
 
+export async function signOut() {
   try {
     const { error } = await auth.signOut();
     if (error) throw error;
@@ -69,9 +70,12 @@ import toast from '../components/toast.js';
   }
 }
 
-  return auth.getUser().then(({ data }) => data.user || null);
+export async function getCurrentUser() {
+  const { data } = await auth.getUser();
+  return data.user || null;
 }
 
+export async function getCurrentProfile() {
   try {
     const user = await getCurrentUser();
     if (!user) return null;
@@ -83,14 +87,15 @@ import toast from '../components/toast.js';
     if (error) throw error;
     return data;
   } catch (err) {
-    toast.error(err.message || 'Failed to load profile');
     return null;
   }
 }
 
+export function onAuthStateChange(callback) {
   return auth.onAuthStateChange(callback);
 }
 
+export async function requireAuth() {
   const user = await getCurrentUser();
   if (!user) {
     sessionStorage.setItem('z3n_intended_url', window.location.pathname + window.location.search);
@@ -98,6 +103,7 @@ import toast from '../components/toast.js';
   }
 }
 
+export async function requireSeller() {
   await requireAuth();
   const profile = await getCurrentProfile();
   if (!profile || (profile.role !== 'seller' && profile.role !== 'admin')) {
@@ -105,6 +111,7 @@ import toast from '../components/toast.js';
   }
 }
 
+export async function requireAdmin() {
   await requireAuth();
   const profile = await getCurrentProfile();
   if (!profile || profile.role !== 'admin') {

@@ -3,58 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Z3n Marketplace</title>
-  <!-- Base CSS imports -->
+  <title>Z3N — The AI Marketplace</title>
+  <meta name="description" content="Z3N is the premium marketplace for AI prompts, tools, agents, Chrome extensions and workflows">
+  <meta property="og:title" content="Z3N Marketplace">
+  <meta property="og:description" content="Buy and sell AI-powered products">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://z3n.vercel.app">
   <link rel="stylesheet" href="../styles/base/reset.css">
   <link rel="stylesheet" href="../styles/base/variables.css">
   <link rel="stylesheet" href="../styles/base/typography.css">
   <link rel="stylesheet" href="../styles/pages/landing.css">
 </head>
 <body>
-  <!-- Navigation -->
   <div id="nav-container"></div>
-  <!-- Main Content -->
   <main id="landing-main">
     <section id="hero">
       <h1 id="hero-title">The AI Marketplace</h1>
       <p id="hero-subtitle">Buy and sell prompts, tools, agents, extensions and workflows</p>
-      <a href="/pages/marketplace.html">Browse Marketplace</a>
-      <a href="/pages/auth/signup.html">Start Selling</a>
+      <a href="/pages/marketplace.html" class="btn-primary">Browse Marketplace</a>
+      <a href="/pages/auth/signup.html" class="btn-secondary">Start Selling</a>
     </section>
     <section id="stats">
-      <div>
-        <span id="stat-products">-</span>
-        <span>Products</span>
-      </div>
-      <div>
-        <span id="stat-sellers">-</span>
-        <span>Sellers</span>
-      </div>
-      <div>
-        <span id="stat-sales">-</span>
-        <span>Sales</span>
-      </div>
+      <div><span id="stat-products">-</span><span>Products</span></div>
+      <div><span id="stat-sellers">-</span><span>Sellers</span></div>
+      <div><span id="stat-sales">-</span><span>Sales</span></div>
     </section>
     <section id="categories">
       <h2>Browse by Category</h2>
-      <div id="categories-grid">
-        <!-- loaded by landing.js -->
-      </div>
+      <div id="categories-grid"></div>
     </section>
     <section id="featured">
       <h2>Featured Products</h2>
-      <div id="featured-grid">
-        <!-- loaded by landing.js -->
-      </div>
+      <div id="featured-grid"></div>
     </section>
   </main>
-  <!-- Modals -->
   <div id="modals"></div>
-  <!-- Footer -->
   <div id="footer-container"></div>
   <script type="module" src="../js/pages/landing.js"></script>
+  <script type="module" src="../js/components/nav.js"></script>
   <script>
-    // Load nav and footer components
     fetch('../components/nav.html').then(r=>r.text()).then(html=>document.getElementById('nav-container').innerHTML=html);
     fetch('../components/footer.html').then(r=>r.text()).then(html=>document.getElementById('footer-container').innerHTML=html);
   </script>

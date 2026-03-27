@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing — Z3N</title>
+  <meta name="description" content="Z3N Marketplace pricing plans - Free, Pro, and Studio tiers for sellers">
+  <link rel="stylesheet" href="../styles/base/reset.css">
+  <link rel="stylesheet" href="../styles/base/variables.css">
+  <link rel="stylesheet" href="../styles/base/typography.css">
+  <link rel="stylesheet" href="../styles/pages/landing.css">
+</head>
+<body>
+  <div id="nav-container"></div>
+  <main id="pricing-main">
+    <div class="pricing-header">
+      <h1>Simple, Transparent Pricing</h1>
+      <p>Choose the plan that fits your selling needs</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h2>Free Seller</h2>
+        <div class="pricing-price">$0<span>/month</span></div>
+        <ul class="pricing-features">
+          <li>List up to 5 products</li>
+          <li>20% platform fee per sale</li>
+          <li>Basic analytics</li>
+          <li>Community support</li>
+        </ul>
+        <a href="/pages/auth/signup.html" class="btn-primary">Start Free</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Coming Soon</div>
+        <h2>Pro Seller</h2>
+        <div class="pricing-price">$15<span>/month</span></div>
+        <ul class="pricing-features">
+          <li>Unlimited products</li>
+          <li>10% platform fee (save 50%)</li>
+          <li>Advanced analytics</li>
+          <li>Priority review (24hr)</li>
+          <li>Discount codes</li>
+          <li>Affiliate program</li>
+        </ul>
+        <button class="btn-primary" disabled>Coming Soon</button>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-badge">Coming Soon</div>
+        <h2>Studio</h2>
+        <div class="pricing-price">$49<span>/month</span></div>
+        <ul class="pricing-features">
+          <li>Everything in Pro</li>
+          <li>7% platform fee</li>
+          <li>Team members (3 seats)</li>
+          <li>API access</li>
+          <li>Custom storefront</li>
+          <li>Dedicated support</li>
+        </ul>
+        <button class="btn-primary" disabled>Coming Soon</button>
+      </div>
+    </div>
+    <div class="fee-comparison">
+      <h2>Fee Comparison</h2>
+      <table>
+        <thead>
+          <tr><th>Sale Amount</th><th>Free (20%)</th><th>Pro (10%)</th><th>Studio (7%)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>$10</td><td>You get $8.00</td><td>You get $9.00</td><td>You get $9.30</td></tr>
+          <tr><td>$100</td><td>You get $80.00</td><td>You get $90.00</td><td>You get $93.00</td></tr>
+          <tr><td>$1,000</td><td>You get $800.00</td><td>You get $900.00</td><td>You get $930.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+  <div id="modals"></div>
+  <div id="footer-container"></div>
+  <script type="module" src="../js/components/nav.js"></script>
+  <script>
+    fetch('../components/nav.html').then(r=>r.text()).then(html=>document.getElementById('nav-container').innerHTML=html);
+    fetch('../components/footer.html').then(r=>r.text()).then(html=>document.getElementById('footer-container').innerHTML=html);
+  </script>
+</body>
+</html>

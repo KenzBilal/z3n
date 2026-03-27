@@ -7,6 +7,7 @@
     { "source": "/search", "destination": "/pages/search.html" },
     { "source": "/product", "destination": "/pages/product.html" },
     { "source": "/checkout", "destination": "/pages/checkout.html" },
+    { "source": "/pricing", "destination": "/pages/pricing.html" },
     { "source": "/login", "destination": "/pages/auth/login.html" },
     { "source": "/signup", "destination": "/pages/auth/signup.html" },
     { "source": "/reset", "destination": "/pages/auth/reset.html" },
@@ -40,5 +41,6 @@
         { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization" }
       ]
     }
-  ]
+  ],
+  "cleanUrls": true
 }

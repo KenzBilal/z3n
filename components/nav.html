@@ -1,29 +1,60 @@
 <!-- Global Navigation Component -->
 <nav id="main-nav">
-  <!-- Logo -->
-  <a href="/pages/index.html" id="logo">Z3N</a>
-  <!-- Main Navigation Links -->
-  <ul id="nav-links">
-    <li><a href="/pages/marketplace.html">Marketplace</a></li>
-    <li><a href="/pages/buyer/library.html">Library</a></li>
-    <li><a href="/pages/seller/dashboard.html">Sell</a></li>
-  </ul>
-  <!-- Search Bar -->
-  <div id="nav-search-bar"></div>
-  <!-- Cart Icon -->
-  <div id="cart-icon">
-    <span id="cart-count"></span>
+  <div class="nav-left">
+    <a href="/pages/index.html" id="logo">Z3N</a>
+    <ul id="nav-links">
+      <li><a href="/pages/marketplace.html">Marketplace</a></li>
+      <li><a href="/pages/buyer/library.html">Library</a></li>
+      <li><a href="/pages/seller/dashboard.html">Sell</a></li>
+    </ul>
   </div>
-  <!-- Auth Buttons -->
-  <div class="nav-logged-out">
-    <a id="nav-login" href="/pages/auth/login.html">Login</a>
-    <a id="nav-signup" href="/pages/auth/signup.html">Signup</a>
+  <div class="nav-center">
+    <div id="nav-search-bar"></div>
   </div>
-  <!-- User Dropdown -->
-  <div id="nav-user-menu" class="nav-logged-in" style="display:none">
-    <a href="/pages/buyer/dashboard.html">Dashboard</a>
-    <a href="/pages/buyer/library.html">Library</a>
-    <a id="nav-seller-link" href="/pages/seller/dashboard.html">Seller Dashboard</a>
-    <button id="nav-logout">Logout</button>
+  <div class="nav-right">
+    <div id="nav-notifications" class="nav-logged-in" style="display:none">
+      <button id="notif-bell">&#128276;<span id="notif-count" style="display:none">0</span></button>
+      <div id="notif-dropdown" style="display:none">
+        <div id="notif-list"></div>
+        <button id="mark-all-read">Mark all read</button>
+      </div>
+    </div>
+    <div id="cart-icon" class="nav-cart">
+      <span id="cart-count" class="cart-badge"></span>
+    </div>
+    <div class="nav-logged-out nav-auth-buttons">
+      <a id="nav-login" href="/pages/auth/login.html">Login</a>
+      <a id="nav-signup" href="/pages/auth/signup.html" class="btn-primary btn-small">Sign Up</a>
+    </div>
+    <div id="nav-user-menu" class="nav-logged-in" style="display:none">
+      <div id="nav-avatar" class="nav-avatar-btn">
+        <img id="nav-avatar-img" src="" alt="Avatar" class="nav-avatar-img" style="display:none">
+        <span id="nav-avatar-placeholder" class="nav-avatar-placeholder"></span>
+      </div>
+      <div id="nav-dropdown" class="nav-dropdown" style="display:none">
+        <a href="/pages/buyer/dashboard.html">Dashboard</a>
+        <a href="/pages/buyer/library.html">Library</a>
+        <a href="/pages/buyer/wishlist.html">Wishlist</a>
+        <a href="/pages/buyer/profile.html">Profile</a>
+        <hr>
+        <a href="/pages/seller/dashboard.html">Seller Dashboard</a>
+        <hr>
+        <button id="nav-logout">Logout</button>
+      </div>
+    </div>
+    <button id="nav-hamburger" class="nav-hamburger">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+<div id="nav-mobile-menu" class="nav-mobile-menu" style="display:none">
+  <a href="/pages/marketplace.html">Marketplace</a>
+  <a href="/pages/buyer/library.html">Library</a>
+  <a href="/pages/seller/dashboard.html">Sell</a>
+  <a href="/pages/auth/login.html" class="nav-logged-out">Login</a>
+  <a href="/pages/auth/signup.html" class="nav-logged-out">Sign Up</a>
+  <a href="/pages/buyer/dashboard.html" class="nav-logged-in" style="display:none">Dashboard</a>
+  <a href="/pages/seller/dashboard.html" class="nav-logged-in" style="display:none">Seller Dashboard</a>
+  <button id="nav-logout-mobile" class="nav-logged-in" style="display:none">Logout</button>
+</div>
+<div id="cart-modal" class="cart-modal" style="display:none"></div>

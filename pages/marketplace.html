@@ -11,15 +11,53 @@
 </head>
 <body>
   <div id="nav-container"></div>
-  <main id="marketplace-main">
-    <!-- Product filters, product grid populated by JS -->
-  </main>
+  <div id="marketplace-layout">
+    <!-- Filters sidebar -->
+    <aside id="filters-sidebar">
+      <h3>Categories</h3>
+      <div id="category-filters"></div>
+      <h3>Price</h3>
+      <label class="radio-label"><input type="radio" name="price" value="all" checked> All</label>
+      <label class="radio-label"><input type="radio" name="price" value="free"> Free</label>
+      <label class="radio-label"><input type="radio" name="price" value="paid"> Paid</label>
+      <h3>Price Range</h3>
+      <div class="price-range-inputs">
+        <input type="number" id="filter-min-price" placeholder="Min $" min="0">
+        <input type="number" id="filter-max-price" placeholder="Max $" min="0">
+      </div>
+      <h3>AI Models</h3>
+      <div id="ai-model-filters"></div>
+      <button id="clear-filters" class="btn-secondary">Clear Filters</button>
+    </aside>
+    <!-- Main content -->
+    <main id="marketplace-main">
+      <div id="marketplace-header">
+        <span id="results-count"></span>
+        <select id="sort-select">
+          <option value="newest">Newest</option>
+          <option value="popular">Most Popular</option>
+          <option value="rating">Top Rated</option>
+          <option value="price_asc">Price: Low to High</option>
+          <option value="price_desc">Price: High to Low</option>
+        </select>
+      </div>
+      <div id="products-grid"></div>
+      <div id="pagination">
+        <button id="prev-page" disabled>&larr; Previous</button>
+        <span id="page-info"></span>
+        <button id="next-page">Next &rarr;</button>
+      </div>
+      <div id="no-results" style="display:none">
+        <p>No products found. Try different filters.</p>
+      </div>
+    </main>
+  </div>
   <div id="modals"></div>
   <div id="footer-container"></div>
-  <script type="module" src="../../js/pages/marketplace.js"></script>
+  <script type="module" src="../js/pages/marketplace.js"></script>
   <script>
-    fetch('../../components/nav.html').then(r=>r.text()).then(html=>document.getElementById('nav-container').innerHTML=html);
-    fetch('../../components/footer.html').then(r=>r.text()).then(html=>document.getElementById('footer-container').innerHTML=html);
+    fetch('../components/nav.html').then(r=>r.text()).then(html=>document.getElementById('nav-container').innerHTML=html);
+    fetch('../components/footer.html').then(r=>r.text()).then(html=>document.getElementById('footer-container').innerHTML=html);
   </script>
 </body>
 </html>

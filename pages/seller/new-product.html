@@ -12,7 +12,153 @@
 <body>
   <div id="nav-container"></div>
   <main id="new-product-main">
-    <!-- New product form populated by JS -->
+    <div id="product-progress-bar"></div>
+    <form id="new-product-form">
+      <!-- Step 1: Basic Info -->
+      <section class="step" id="step1">
+        <h2>Step 1: Basic Info</h2>
+        <div class="form-group">
+          <label for="step1-title">Title</label>
+          <input type="text" id="step1-title" required placeholder="Enter product title">
+        </div>
+        <div class="form-group">
+          <label for="step1-category">Category</label>
+          <select id="step1-category" required>
+            <option value="">Select a category</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="step1-subcategory">Subcategory</label>
+          <select id="step1-subcategory" required>
+            <option value="">Select a subcategory</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="step1-description">Short Description</label>
+          <textarea id="step1-description" maxlength="160" required placeholder="Brief description of your product"></textarea>
+          <span id="desc-counter">0/160</span>
+        </div>
+        <div class="form-group">
+          <label>Slug</label>
+          <div id="step1-slug" class="slug-preview">Auto-generated from title</div>
+        </div>
+        <div class="step-actions">
+          <button type="button" id="step1-next" class="btn-primary">Next</button>
+        </div>
+      </section>
+
+      <!-- Step 2: Content & Pricing -->
+      <section class="step" id="step2" style="display:none">
+        <h2>Step 2: Content & Pricing</h2>
+        <div class="form-group">
+          <label for="step2-long-desc">Long Description</label>
+          <textarea id="step2-long-desc" required placeholder="Detailed description of your product"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="step2-preview">Preview Content</label>
+          <textarea id="step2-preview" required placeholder="What buyers see before purchasing (first 30%)"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="step2-price">Price ($)</label>
+          <input type="number" id="step2-price" min="0" step="0.01" value="0" required>
+          <label class="checkbox-label">
+            <input type="checkbox" id="step2-free"> Make this free
+          </label>
+        </div>
+        <div class="form-group">
+          <label for="step2-compare-price">Original Price ($)</label>
+          <input type="number" id="step2-compare-price" min="0" step="0.01" placeholder="Shows as crossed out">
+        </div>
+        <div class="form-group">
+          <label for="step2-demo-url">Demo URL</label>
+          <input type="url" id="step2-demo-url" placeholder="https://example.com/demo">
+        </div>
+        <div class="form-group">
+          <fieldset id="step2-ai-models">
+            <legend>AI Models</legend>
+            <label class="checkbox-label"><input type="checkbox" value="GPT-4"> GPT-4</label>
+            <label class="checkbox-label"><input type="checkbox" value="GPT-4o"> GPT-4o</label>
+            <label class="checkbox-label"><input type="checkbox" value="Claude"> Claude</label>
+            <label class="checkbox-label"><input type="checkbox" value="Gemini"> Gemini</label>
+            <label class="checkbox-label"><input type="checkbox" value="Midjourney"> Midjourney</label>
+            <label class="checkbox-label"><input type="checkbox" value="Stable Diffusion"> Stable Diffusion</label>
+            <label class="checkbox-label"><input type="checkbox" value="DALL-E"> DALL-E</label>
+            <label class="checkbox-label"><input type="checkbox" value="Llama"> Llama</label>
+            <label class="checkbox-label"><input type="checkbox" value="Mistral"> Mistral</label>
+            <label class="checkbox-label"><input type="checkbox" value="Other"> Other</label>
+          </fieldset>
+        </div>
+        <div class="step-actions">
+          <button type="button" id="step2-back" class="btn-secondary">Back</button>
+          <button type="button" id="step2-next" class="btn-primary">Next</button>
+        </div>
+      </section>
+
+      <!-- Step 3: Media & Files -->
+      <section class="step" id="step3" style="display:none">
+        <h2>Step 3: Media & Files</h2>
+        <div class="form-group">
+          <label for="step3-thumbnail">Thumbnail Image</label>
+          <input type="file" id="step3-thumbnail" accept="image/jpeg,image/png,image/webp">
+          <progress id="thumbnail-progress" value="0" max="100" style="display:none"></progress>
+          <div id="thumbnail-preview"></div>
+        </div>
+        <div class="form-group">
+          <label for="step3-file">Product File</label>
+          <input type="file" id="step3-file">
+          <p class="help-text">The actual product buyers will download</p>
+          <progress id="file-progress" value="0" max="100" style="display:none"></progress>
+          <div id="file-filename"></div>
+        </div>
+        <div class="form-group">
+          <label for="step3-gallery">Gallery Images (max 5)</label>
+          <input type="file" id="step3-gallery" accept="image/jpeg,image/png,image/webp" multiple>
+          <div id="gallery-previews"></div>
+        </div>
+        <div class="step-actions">
+          <button type="button" id="step3-back" class="btn-secondary">Back</button>
+          <button type="button" id="step3-next" class="btn-primary">Next</button>
+        </div>
+      </section>
+
+      <!-- Step 4: Settings -->
+      <section class="step" id="step4" style="display:none">
+        <h2>Step 4: Settings</h2>
+        <div class="form-group">
+          <label for="step4-tags">Tags</label>
+          <input type="text" id="step4-tags" placeholder="Comma separated (max 10)">
+          <div id="tags-chips"></div>
+        </div>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="step4-limited"> Limited edition
+          </label>
+          <div id="max-sales-label" style="display:none">
+            <label for="step4-max-sales">Max sales</label>
+            <input type="number" id="step4-max-sales" min="1" placeholder="Maximum number of sales">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="step4-version">Version</label>
+          <input type="text" id="step4-version" value="1.0">
+        </div>
+        <div class="step-actions">
+          <button type="button" id="step4-back" class="btn-secondary">Back</button>
+          <button type="button" id="step4-next" class="btn-primary">Next</button>
+        </div>
+      </section>
+
+      <!-- Step 5: Review & Submit -->
+      <section class="step" id="step5" style="display:none">
+        <h2>Step 5: Review & Submit</h2>
+        <div id="review-summary"></div>
+        <div class="step-actions">
+          <button type="button" id="step5-back" class="btn-secondary">Back</button>
+          <button type="submit" id="step5-submit" class="btn-primary">Submit for Review</button>
+        </div>
+      </section>
+    </form>
+    <div id="form-toast"></div>
   </main>
   <div id="modals"></div>
   <div id="footer-container"></div>
