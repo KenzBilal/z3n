@@ -1,1 +1,268 @@
-/* Landing page styles (structure only) */
+/* =========================================
+   Z3N Landing Page - "Nothing" OS Aesthetic
+   ========================================= */
+
+#landing-main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 60px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+/* --- Bento Hero Grid --- */
+.bento-hero-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 280px);
+  gap: 16px;
+}
+
+.bento-widget {
+  border-radius: 40px;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--card);
+  transition: transform 0.3s ease, background 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Main Hero Span */
+.hero-widget {
+  grid-column: span 3;
+  grid-row: span 2;
+  background: #111111;
+  align-items: flex-start;
+}
+
+.hero-widget h1 {
+  font-family: var(--font-display);
+  font-size: 5rem;
+  line-height: 1.1;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 16px;
+  letter-spacing: -0.03em;
+}
+
+.hero-widget p {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+}
+
+/* Pill Buttons */
+.pill {
+  border-radius: 999px !important;
+  padding: 16px 32px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+.btn-primary.pill {
+  background-color: var(--accent);
+  color: #FFFFFF;
+  border: none;
+}
+
+.btn-primary.pill:hover {
+  background-color: var(--accent-hover);
+  transform: scale(1.02);
+}
+
+.btn-secondary.pill {
+  background-color: transparent;
+  color: #FFFFFF;
+  border: 1px solid #333333;
+}
+
+.btn-secondary.pill:hover {
+  background-color: #FFFFFF;
+  color: #000000;
+}
+
+/* Stat Widgets */
+.stat-widget {
+  grid-column: span 1;
+  align-items: center;
+  text-align: center;
+  background: #0A0A0A;
+  border: 1px solid #1A1A1A;
+}
+
+.stat-widget.dark-stat {
+  background: #000000;
+  border: 1px solid #222222;
+}
+
+.stat-widget:hover {
+  background: #151515;
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  color: var(--text-muted);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* --- Sections General --- */
+.section-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.section-header h2 {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: #FFFFFF;
+}
+
+.view-all {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+}
+
+.view-all:hover {
+  color: var(--accent);
+}
+
+/* --- Categories Pill Grid --- */
+.pill-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.pill-grid a {
+  background: #0A0A0A;
+  border: 1px solid #1A1A1A;
+  color: #FFFFFF;
+  padding: 20px 32px;
+  border-radius: 999px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s ease;
+}
+
+.pill-grid a:hover {
+  background: #FFFFFF;
+  color: #000000;
+  transform: translateY(-2px);
+}
+
+/* --- Featured Products Bento Grid --- */
+.product-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.product-bento-grid a {
+  background: #0A0A0A;
+  border-radius: 32px;
+  padding: 24px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid transparent;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.product-bento-grid a:hover {
+  border-color: #333333;
+  background: #111111;
+}
+
+.product-bento-grid img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  background: #1A1A1A;
+}
+
+.product-bento-grid h3 {
+  color: #FFFFFF;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.product-bento-grid p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+.product-bento-grid span {
+  margin-top: auto;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 1024px) {
+  .bento-hero-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto auto;
+  }
+  .hero-widget {
+    grid-column: span 2;
+    grid-row: span 1;
+    padding: 40px;
+  }
+  .hero-widget h1 { font-size: 3.5rem; }
+  .product-bento-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  #landing-main { padding: 32px 16px; gap: 48px; }
+  .bento-hero-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+  }
+  .hero-widget { grid-column: span 1; padding: 32px 24px; }
+  .hero-widget h1 { font-size: 2.5rem; }
+  .hero-actions { flex-direction: column; }
+  .stat-widget { grid-column: span 1; padding: 32px; }
+  .product-bento-grid { grid-template-columns: 1fr; }
+}

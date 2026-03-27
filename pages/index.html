@@ -5,10 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Z3N — The AI Marketplace</title>
   <meta name="description" content="Z3N is the premium marketplace for AI prompts, tools, agents, Chrome extensions and workflows">
-  <meta property="og:title" content="Z3N Marketplace">
-  <meta property="og:description" content="Buy and sell AI-powered products">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://z3n.vercel.app">
   <link rel="stylesheet" href="../styles/base/reset.css">
   <link rel="stylesheet" href="../styles/base/variables.css">
   <link rel="stylesheet" href="../styles/base/typography.css">
@@ -16,29 +12,51 @@
 </head>
 <body>
   <div id="nav-container"></div>
+  
   <main id="landing-main">
-    <section id="hero">
-      <h1 id="hero-title">The AI Marketplace</h1>
-      <p id="hero-subtitle">Buy and sell prompts, tools, agents, extensions and workflows</p>
-      <a href="/pages/marketplace.html" class="btn-primary">Browse Marketplace</a>
-      <a href="/pages/auth/signup.html" class="btn-secondary">Start Selling</a>
+    <section class="bento-hero-grid">
+      <div class="bento-widget hero-widget">
+        <h1 id="hero-title">The AI Marketplace.</h1>
+        <p id="hero-subtitle">Discover, buy, and sell next-generation prompts, tools, agents, and workflows.</p>
+        <div class="hero-actions">
+          <a href="/pages/marketplace.html" class="btn-primary pill">Browse Marketplace</a>
+          <a href="/pages/auth/signup.html" class="btn-secondary pill">Start Selling</a>
+        </div>
+      </div>
+
+      <div class="bento-widget stat-widget">
+        <span class="stat-value" id="stat-products">-</span>
+        <span class="stat-label">Products</span>
+      </div>
+      <div class="bento-widget stat-widget dark-stat">
+        <span class="stat-value" id="stat-sellers">-</span>
+        <span class="stat-label">Sellers</span>
+      </div>
+      <div class="bento-widget stat-widget">
+        <span class="stat-value" id="stat-sales">-</span>
+        <span class="stat-label">Total Sales</span>
+      </div>
     </section>
-    <section id="stats">
-      <div><span id="stat-products">-</span><span>Products</span></div>
-      <div><span id="stat-sellers">-</span><span>Sellers</span></div>
-      <div><span id="stat-sales">-</span><span>Sales</span></div>
+
+    <section id="categories" class="section-container">
+      <div class="section-header">
+        <h2>Categories</h2>
+        <a href="/pages/marketplace.html" class="view-all">View All →</a>
+      </div>
+      <div id="categories-grid" class="pill-grid"></div>
     </section>
-    <section id="categories">
-      <h2>Browse by Category</h2>
-      <div id="categories-grid"></div>
-    </section>
-    <section id="featured">
-      <h2>Featured Products</h2>
-      <div id="featured-grid"></div>
+
+    <section id="featured" class="section-container">
+      <div class="section-header">
+        <h2>Featured Products</h2>
+      </div>
+      <div id="featured-grid" class="product-bento-grid"></div>
     </section>
   </main>
+
   <div id="modals"></div>
   <div id="footer-container"></div>
+  
   <script type="module" src="../js/pages/landing.js"></script>
   <script type="module" src="../js/components/nav.js"></script>
   <script>

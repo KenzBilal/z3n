@@ -45,8 +45,8 @@ async function loadLanding() {
         <a href="/pages/product.html?slug=${p.slug}">
           <img src="${p.thumbnail_url || ''}" alt="${p.title}">
           <h3>${p.title}</h3>
-          <p>${p.profiles?.display_name || p.profiles?.username || ''}</p>
-          <span>${p.price === 0 ? 'Free' : '$' + p.price}</span>
+          <p>By ${p.profiles?.display_name || p.profiles?.username || 'Unknown'}</p>
+          <span>${p.price === 0 ? 'Free' : '$' + Number(p.price).toFixed(2)}</span>
         </a>
       `).join('');
     }
