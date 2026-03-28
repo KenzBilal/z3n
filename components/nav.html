@@ -1,60 +1,62 @@
 <!-- Global Navigation Component -->
 <nav id="main-nav">
-  <div class="nav-left">
+  <div class="nav-inner">
     <a href="/pages/index.html" id="logo">Z3N</a>
-    <ul id="nav-links">
-      <li><a href="/pages/marketplace.html">Marketplace</a></li>
-      <li><a href="/pages/buyer/library.html">Library</a></li>
-      <li><a href="/pages/seller/dashboard.html">Sell</a></li>
-    </ul>
-  </div>
-  <div class="nav-center">
-    <div id="nav-search-bar"></div>
-  </div>
-  <div class="nav-right">
-    <div id="nav-notifications" class="nav-logged-in" style="display:none">
-      <button id="notif-bell">&#128276;<span id="notif-count" style="display:none">0</span></button>
-      <div id="notif-dropdown" style="display:none">
-        <div id="notif-list"></div>
-        <button id="mark-all-read">Mark all read</button>
+    <div class="nav-links">
+      <a href="/pages/marketplace.html">Marketplace</a>
+      <a href="/pages/pricing.html">Pricing</a>
+      <a href="/pages/seller/dashboard.html">Sell</a>
+    </div>
+    <div class="nav-right">
+      <div id="nav-notifications" class="nav-logged-in" style="display:none">
+        <button id="notif-bell">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span id="notif-count" style="display:none">0</span>
+        </button>
+        <div id="notif-dropdown" style="display:none">
+          <div id="notif-list"></div>
+          <button id="mark-all-read">Mark all read</button>
+        </div>
       </div>
-    </div>
-    <div id="cart-icon" class="nav-cart">
-      <span id="cart-count" class="cart-badge"></span>
-    </div>
-    <div class="nav-logged-out nav-auth-buttons">
-      <a id="nav-login" href="/pages/auth/login.html">Login</a>
-      <a id="nav-signup" href="/pages/auth/signup.html" class="btn-primary btn-small">Sign Up</a>
-    </div>
-    <div id="nav-user-menu" class="nav-logged-in" style="display:none">
-      <div id="nav-avatar" class="nav-avatar-btn">
-        <img id="nav-avatar-img" src="" alt="Avatar" class="nav-avatar-img" style="display:none">
-        <span id="nav-avatar-placeholder" class="nav-avatar-placeholder"></span>
+      <a id="cart-icon" href="/pages/checkout.html" class="nav-cart">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span id="cart-count" class="cart-badge" style="display:none">0</span>
+      </a>
+      <div class="nav-logged-out">
+        <a id="nav-login" href="/pages/auth/login.html">Log in</a>
+        <a id="nav-signup" href="/pages/auth/signup.html" class="btn-primary btn-small">Sign up</a>
       </div>
-      <div id="nav-dropdown" class="nav-dropdown" style="display:none">
-        <a href="/pages/buyer/dashboard.html">Dashboard</a>
-        <a href="/pages/buyer/library.html">Library</a>
-        <a href="/pages/buyer/wishlist.html">Wishlist</a>
-        <a href="/pages/buyer/profile.html">Profile</a>
-        <hr>
-        <a href="/pages/seller/dashboard.html">Seller Dashboard</a>
-        <hr>
-        <button id="nav-logout">Logout</button>
+      <div id="nav-user-menu" class="nav-logged-in" style="display:none">
+        <div id="nav-avatar" class="nav-avatar-btn">
+          <img id="nav-avatar-img" src="" alt="" style="display:none">
+          <span id="nav-avatar-placeholder"></span>
+        </div>
+        <div id="nav-dropdown" class="nav-dropdown" style="display:none">
+          <a href="/pages/buyer/dashboard.html">Dashboard</a>
+          <a href="/pages/buyer/library.html">Library</a>
+          <a href="/pages/buyer/wishlist.html">Wishlist</a>
+          <a href="/pages/buyer/profile.html">Profile</a>
+          <div class="nav-dropdown-divider"></div>
+          <a href="/pages/seller/dashboard.html">Seller Dashboard</a>
+          <div class="nav-dropdown-divider"></div>
+          <button id="nav-logout">Log out</button>
+        </div>
       </div>
+      <button id="nav-hamburger" class="nav-hamburger">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-    <button id="nav-hamburger" class="nav-hamburger">
-      <span></span><span></span><span></span>
-    </button>
   </div>
 </nav>
 <div id="nav-mobile-menu" class="nav-mobile-menu" style="display:none">
   <a href="/pages/marketplace.html">Marketplace</a>
+  <a href="/pages/pricing.html">Pricing</a>
   <a href="/pages/buyer/library.html">Library</a>
   <a href="/pages/seller/dashboard.html">Sell</a>
-  <a href="/pages/auth/login.html" class="nav-logged-out">Login</a>
-  <a href="/pages/auth/signup.html" class="nav-logged-out">Sign Up</a>
+  <div class="nav-mobile-divider"></div>
+  <a href="/pages/auth/login.html" class="nav-logged-out">Log in</a>
+  <a href="/pages/auth/signup.html" class="nav-logged-out">Sign up</a>
   <a href="/pages/buyer/dashboard.html" class="nav-logged-in" style="display:none">Dashboard</a>
-  <a href="/pages/seller/dashboard.html" class="nav-logged-in" style="display:none">Seller Dashboard</a>
-  <button id="nav-logout-mobile" class="nav-logged-in" style="display:none">Logout</button>
+  <button id="nav-logout-mobile" class="nav-logged-in" style="display:none">Log out</button>
 </div>
 <div id="cart-modal" class="cart-modal" style="display:none"></div>
