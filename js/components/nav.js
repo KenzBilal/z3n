@@ -1,3 +1,44 @@
+// Anti-copy protection
+(function() {
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    return false;
+  });
+
+  document.addEventListener('selectstart', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
+    e.preventDefault();
+    return false;
+  });
+
+  document.addEventListener('dragstart', function(e) {
+    if (e.target.tagName === 'IMG') {
+      e.preventDefault();
+      return false;
+    }
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey || e.metaKey) {
+      if (['c', 'C', 's', 'S', 'u', 'U', 'a', 'A'].includes(e.key)) {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        e.preventDefault();
+        return false;
+      }
+    }
+    if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['i', 'I', 'j', 'J', 'c', 'C'].includes(e.key))) {
+      e.preventDefault();
+      return false;
+    }
+  });
+
+  document.addEventListener('copy', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    e.preventDefault();
+    return false;
+  });
+})();
+
 // Dynamic nav loader for Z3n Marketplace
 import supabase from '../core/supabase.js';
 import store from '../core/store.js';
