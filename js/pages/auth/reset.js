@@ -1,47 +1,51 @@
-// Password reset page logic for Z3n Marketplace
-import { auth } from '../../core/supabase.js';
-import toast from '../../components/toast.js';
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from '../../supabase/config.js';
 
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('reset-form');
-  if (!form) return;
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  form.innerHTML = `
-    <h2>Reset Password</h2>
-    <div>
-      <label for="reset-email">Email</label>
-      <input type="email" id="reset-email" required autocomplete="email">
-    </div>
-    <button type="submit" id="reset-submit">Send Reset Link</button>
-    <div id="reset-error" style="color:red;"></div>
-    <div id="reset-success" style="color:green;"></div>
-  `;
+const emailInput = document.getElementById('reset-email');
+const submitBtn = document.getElementById('reset-submit');
+const errorDiv = document.getElementById('reset-error');
+const successDiv = document.getElementById('reset-success');
+const formSection = document.getElementById('reset-form-section');
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('reset-email').value.trim();
-    const submitBtn = document.getElementById('reset-submit');
-    const errorDiv = document.getElementById('reset-error');
-    const successDiv = document.getElementById('reset-success');
+submitBtn?.addEventListener('click', async () => {
+  const email = emailInput?.value.trim();
 
-    errorDiv.textContent = '';
-    successDiv.textContent = '';
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Sending...';
+  errorDiv.classList.remove('show');
 
-    try {
-      const { error } = await auth.resetPasswordForEmail(email, {
-        redirectTo: window.location.origin + '/pages/auth/reset.html'
-      });
-      if (error) throw error;
-      successDiv.textContent = 'Check your email for a reset link.';
-      toast.success('Reset email sent');
-    } catch (err) {
-      errorDiv.textContent = err.message || 'Failed to send reset email';
-      toast.error(err.message || 'Failed to send reset email');
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Send Reset Link';
-    }
-  });
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errorDiv.textContent = 'Please enter a valid email address';
+    errorDiv.classList.add('show');
+    emailInput?.focus();
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending...';
+
+  try {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + '/pages/auth/reset.html'
+    });
+
+    if (error) throw error;
+
+    formSection.style.display = 'none';
+    successDiv.classList.add('show');
+
+  } catch (err) {
+    errorDiv.textContent = err.message || 'Failed to send reset email. Please try again.';
+    errorDiv.classList.add('show');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send reset link';
+  }
+});
+
+emailInput?.addEventListener('input', () => {
+  errorDiv.classList.remove('show');
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') submitBtn?.click();
 });
