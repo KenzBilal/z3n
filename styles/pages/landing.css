@@ -806,6 +806,27 @@ body {
   color: #4A4A4A;
 }
 
+.cat-card-more {
+  border-style: dashed;
+  border-color: #2A2A2A;
+}
+
+.cat-card-more:hover {
+  border-color: #7B61FF;
+  background: rgba(123, 97, 255, 0.05);
+}
+
+.cat-card-more .cat-icon-wrap {
+  background: transparent;
+  border: 1px dashed #2A2A2A;
+}
+
+.cat-card-more:hover .cat-icon-wrap {
+  background: rgba(123, 97, 255, 0.1);
+  border-color: #7B61FF;
+  color: #7B61FF;
+}
+
 /* =========================================
    PRODUCT CARDS
    ========================================= */
